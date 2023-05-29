@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 
 io.on('connection', (socket) => { 
     console.log('socket connected')
-    console.log('socket', socket)
+    console.log('socket1: ', socket.id)
     socket.on('recive message', async(data)=>{
         try {
             console.log(`message recived ${data.message}`)
@@ -48,7 +48,7 @@ io.on('connection', (socket) => {
     app.post('/get-message', (req, res)=>{
         console.log('body', req.body)
         socket.emit('print', {message: `recived message from sqs2 : ${req.body.message}`})
-        res.send('socket', socket)
+        res.send({socket: socket.id})
     })
 });
 
