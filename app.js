@@ -20,17 +20,17 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
 io.on('connection', (socket) => { 
-    // console.log('socket connected')
+    console.log('socket connected')
     socket.on('recive message', async(data)=>{
         try {
-            // console.log(`message recived ${data.message}`)
-            // const params = {
-            //     MessageBody: data.message,
-            //     QueueUrl: sendQueueURL
-            // };
+            console.log(`message recived ${data.message}`)
+            const params = {
+                MessageBody: data.message,
+                QueueUrl: sendQueueURL
+            };
               
-            // let result = await sqs.sendMessage(params).promise();
-            // console.log('Result', result)
+            let result = await sqs.sendMessage(params).promise();
+            console.log('Result', result)
             socket.emit('print', {message: `send message to sqs1 : ${data.message}`})
         } catch (error) {
             console.log(error)
