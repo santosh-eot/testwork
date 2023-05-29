@@ -25,13 +25,16 @@
 <script>
     const socket = io();
     socket.on('connect', () => { });
-    $('#myButton').click(function () {
+    $('#myButton').click(() => {
         let message = $('#myMessage').val()
         socket.emit('recive message', { message: message });
         $('#myMessage').val('')
         $("#menu").append(`<li>Message send to lambda - ${message}</li>`);
     });
-    socket.on('disconnect', function () { });
+    socket.on('lambda messgage', (data)=>{
+        $("#menu").append(`<li>Message recived from to sqs - ${data.message}</li>`);
+    })
+    socket.on('disconnect', () => { });
 </script>
 
 </html>

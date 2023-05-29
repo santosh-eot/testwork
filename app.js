@@ -15,7 +15,7 @@ let sendQueueURL = process.env.SEND_QUEUE_URL;
 const sqs = new AWS.SQS({apiVersion: '2012-11-05'});
 
 io.on('connection', (socket) => { 
-    console.log('socket connected')
+    // console.log('socket connected')
     socket.on('recive message', async(data)=>{
         try {
             console.log(`message recived ${data.message}`)
@@ -29,7 +29,9 @@ io.on('connection', (socket) => {
         } catch (error) {
             console.log(error)
         }
-        
+    })
+    socket.on('recived message lambda', async(data)=>{
+        socket.emit('lambda messgage', data)
     }) 
 });
 
@@ -38,5 +40,6 @@ server.listen(3000, ()=>console.log('server running at port 3000'));
 app.use(express.static(__dirname));
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+    console.log('hello')
+    res.sendFile(__dirname + "/index1.html");
 });
