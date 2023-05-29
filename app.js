@@ -15,11 +15,12 @@ AWS.config.update({
 let sendQueueURL = process.env.SEND_QUEUE_URL;
 
 const sqs = new AWS.SQS({apiVersion: '2012-11-05'});
-
+let socket
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
-io.on('connection', (socket) => { 
+io.on('connection', (sco) => { 
+    socket = soc
     console.log('socket connected')
     console.log('socket1: ', socket.id)
     socket.on('recive message', async(data)=>{
@@ -41,19 +42,20 @@ io.on('connection', (socket) => {
         console.log('message recive from sqs', data)
         
     }) 
-    app.get('/', (req, res) => {
-        res.sendFile(__dirname + "/index1.html");
-    });
-    
-    app.post('/get-message', (req, res)=>{
-        console.log('body', req.body)
-        socket.emit('print', {message: `recived message from sqs2 : ${req.body.message}`})
-        res.send({socket: socket.id})
-    })
 });
 
 server.listen(3000, ()=>console.log('server running at port 3000'));
 
 app.use(express.static(__dirname));
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + "/index1.html");
+});
+
+app.post('/get-message', (req, res)=>{
+    console.log('body', req.body)
+    socket.emit('print', {message: `recived message from sqs2 : ${req.body.message}`})
+    res.send({socket: socket.id})
+})
 
 
