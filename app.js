@@ -45,7 +45,9 @@ io.on('connection', (socket) => {
     });
     
     app.post('/get-message', (req, res)=>{
+        console.log('body', req.body)
         socket.emit('print', {message: `recived message from sqs2 : ${req.body.message}`})
+        res.send('done')
     })
 });
 
