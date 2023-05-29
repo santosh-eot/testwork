@@ -25,6 +25,7 @@ io.on('connection', (socket) => {
             };
               
             let result = await sqs.sendMessage(params).promise();
+            console.log('Result', result)
             socket.emit('print', {message: `send message to sqs : ${data.message}`})
         } catch (error) {
             console.log(error)
