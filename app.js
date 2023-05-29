@@ -19,7 +19,7 @@ let socket
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
-io.on('connection', (sco) => { 
+io.on('connection', (soc) => { 
     socket = soc
     console.log('socket connected')
     console.log('socket1: ', socket.id)
