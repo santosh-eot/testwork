@@ -29,10 +29,11 @@
         let message = $('#myMessage').val()
         socket.emit('recive message', { message: message });
         $('#myMessage').val('')
-        $("#menu").append(`<li>Message send to lambda - ${message}</li>`);
+        // $("#menu").append(`<li>Message send to lambda - ${message}</li>`);
     });
-    socket.on('lambda messgage', (data)=>{
-        $("#menu").append(`<li>Message recived from to sqs - ${data.message}</li>`);
+    socket.on('print', (data)=>{
+        console.log(data)
+        $("#menu").append(`<li>${data.message}</li>`);
     })
     socket.on('disconnect', () => { });
 </script>

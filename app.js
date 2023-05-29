@@ -25,13 +25,14 @@ io.on('connection', (socket) => {
             };
               
             let result = await sqs.sendMessage(params).promise();
-            console.log(result.MessageId)
+            socket.emit('print', {message: `send message to sqs : ${data.message}`})
         } catch (error) {
             console.log(error)
         }
     })
     socket.on('recived message lambda', async(data)=>{
-        socket.emit('lambda messgage', data)
+        console.log('message recive from sqs', data)
+        socket.emit('print', {message: `recived message from lambda : ${data.message}`})
     }) 
 });
 
